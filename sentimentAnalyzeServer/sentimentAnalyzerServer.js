@@ -34,12 +34,31 @@ app.get("/",(req,res)=>{
   });
 
 app.get("/url/emotion", (req,res) => {
-
-    return res.send({"happy":"90","sad":"10"});
+    const analyzeParams = {
+        'url': req.query.url,
+        'features': {
+            'emotion': {},
+            'sentiment': {}
+          },
+      };
+    getData(analyzeParams)
+    .then(response => {
+        return res.json(response.result.emotion.document.emotion)
+    })
 });
 
 app.get("/url/sentiment", (req,res) => {
-    return res.send("url sentiment for "+req.query.url);
+    const analyzeParams = {
+        'url': req.query.url,
+        'features': {
+            'emotion': {},
+            'sentiment': {}
+          },
+      };
+    getData(analyzeParams)
+    .then(response => {
+        return res.json(response.result.sentiment.document.label)
+    })
 });
 
 app.get("/text/emotion", (req,res) => {
